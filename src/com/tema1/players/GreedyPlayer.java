@@ -1,6 +1,7 @@
 package com.tema1.players;
 
 import com.tema1.common.Constants;
+import com.tema1.goods.Goods;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -34,10 +35,26 @@ public class GreedyPlayer extends BasicPlayer{
             } else {
                 if (currentMerchant.hasBribe()) {
                     super.addCoins(currentMerchant.getBribe());
+//                    System.out.println("BAG AFTER GIVING BRIBE");
+//                    for (int i = 0; i < currentMerchant.getBag().size(); ++i) {
+//                        System.out.print(currentMerchant.getBag().get(i).getId() + " ");
+//                    }
+//                    System.out.println();
                 } else {
                     checkMerchant(currentMerchant);
+
                 }
+//                System.out.println("BAG BEFORE SHERIFF PUT");
+//                for (int i = 0; i < currentMerchant.getBag().size(); ++i) {
+//                    System.out.print(currentMerchant.getBag().get(i).getId() + " ");
+//                }
+//                System.out.println();
                 currentMerchant.putOnStand();
+//                System.out.println("MERCHANT STAND AFTER SHERIFF PUT");
+//                Map<Goods, Integer> m = currentMerchant.getMerchantStand();
+//                for (Map.Entry<Goods, Integer> e : m.entrySet()) {
+//                    System.out.println(e.getKey().getId() + " " + e.getValue());
+//                }
             }
         }
     }

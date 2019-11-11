@@ -29,6 +29,10 @@ public abstract class Player {
         declaredGood = null;
     }
 
+    public Map<Goods, Integer> getMerchantStand() {
+        return merchantStand;
+    }
+
     // Getters + Setters
     protected final boolean hasBribe() {
         return bribe > 0;
@@ -39,21 +43,26 @@ public abstract class Player {
         bribe = 0;
     }
 
+    final int brb() {
+        return bribe;
+    }
+
     final int getBribe() {
         totalCoins -= bribe;
-        bribe = 0;
         return bribe;
     }
 
     final int getTotalCoins() { return totalCoins; }
 
+    public final void emptyStand() {
+        merchantStand.clear();
+    }
+
     final void setDeclaredGood(final Goods declaredGood) {
         this.declaredGood = declaredGood;
     }
 
-    final void setBribe(final int bribe) {
-        this.bribe = bribe;
-    }
+    final void setBribe(final int bribe) { this.bribe = bribe; }
 
     public final LinkedList<Goods> getCurrentGoods() {
         return currentGoods;
@@ -86,8 +95,13 @@ public abstract class Player {
             if (currentGood.getType() == GoodsType.Illegal) {
                 IllegalGoods somegood = (IllegalGoods) currentGood;
                 Map<Goods, Integer> illegalBonus = somegood.getIllegalBonus();
-
-                merchantStand.putAll(illegalBonus);
+                for (Map.Entry<Goods, Integer> e : illegalBonus.entrySet()) {
+                    // this.addCoins(e.getKey().getProfit());
+                    for (int i = 0; i < e.getValue(); ++i) {
+                        addToHashMap(e.getKey());
+                    }
+                }
+                // merchantStand.putAll(illegalBonus);
             }
         }
 
@@ -125,6 +139,10 @@ public abstract class Player {
     public void sheriffRole(final ArrayList<Player> merchants) {}
 
     public final void countGoods(final int[][] bonusTable, final int posInPlayers) {
+//        System.out.println("MERCHANT STAND");
+//        for (Map.Entry<Goods, Integer> cg : merchantStand.entrySet()) {
+//            System.out.println(cg.getKey().getId() + " " + cg.getValue());
+//        }
         for (Map.Entry<Goods, Integer> currentGood : merchantStand.entrySet()) {
             Goods currentGoodKey = currentGood.getKey();
             int count = currentGood.getValue();

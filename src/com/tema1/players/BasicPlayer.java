@@ -4,11 +4,9 @@ import com.tema1.goods.GoodsType;
 import com.tema1.common.Constants;
 import com.tema1.goods.Goods;
 import com.tema1.goods.GoodsFactory;
-import java.util.LinkedList;
-import java.util.HashMap;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class BasicPlayer extends Player {
 
@@ -114,6 +112,25 @@ public class BasicPlayer extends Player {
         }
     }
 
+    final ArrayList<Goods> checkMostProfitable(int size) {
+        // using a HashMap to store and sort the good
+        // Map<Goods, Integer> goodsFrequency = new HashMap<Goods, Integer>();
+        ArrayList<Goods> check = new ArrayList<>();
+        // int maxFreq = 0;
+        int maxProfit = 0;
+        Goods declared;
+
+        LinkedList<Goods> currentGoods = super.getCurrentGoods();
+        currentGoods.sort((Goods g, Goods ga) -> ga.getId() - g.getId());
+        currentGoods.sort((Goods g1, Goods g2) -> g2.getProfit() - g1.getProfit());
+
+        for (int i = 0; i < size; ++i) {
+            check.add(currentGoods.get(i));
+        }
+
+        return check;
+    }
+
     final void useIllegalGood() {
         Goods compromise = null;
 
@@ -127,6 +144,7 @@ public class BasicPlayer extends Player {
 
         if (compromise != null) {
             addToBag(compromise);
+            // setDeclaredGood();
             dropGood(compromise);
         }
     }

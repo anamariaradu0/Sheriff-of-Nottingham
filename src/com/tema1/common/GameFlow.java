@@ -51,10 +51,12 @@ public class GameFlow {
 //        for (Player currentPLayer : players) {
 //            currentPLayer.printMerchantStand();
 //            System.out.println();
-//        }
+////        }
 //        for (Player player : players) {
 //            System.out.println(player.computeScore());
 //        }
+
+//            for (Player p : players) p.emptyStand();
         }
         computeFinalScore();
     }
@@ -91,18 +93,23 @@ public class GameFlow {
             }
 
             //System.out.println(king + " " + queen);
-
             for (int i = 0; i < pLen; ++i) {
                 if (bonusTable[i][j] == king && king != 0) {
                     Goods good = GoodsFactory.getInstance().getGoodsById(j);
-                    LegalGoods legal = (LegalGoods) good;
-                    players.get(i).addCoins(legal.getKingBonus());
-                    king += 1;
+                    if (good.getType() == GoodsType.Legal) {
+                        LegalGoods legal = (LegalGoods) good;
+                        players.get(i).addCoins(legal.getKingBonus());
+                        // System.out.println(legal.getKingBonus());
+                        king += 1;
+                    }
                 } else if (bonusTable[i][j] == queen && queen != 0) {
                     Goods good = GoodsFactory.getInstance().getGoodsById(j);
-                    LegalGoods legal = (LegalGoods) good;
-                    players.get(i).addCoins(legal.getQueenBonus());
-                    queen += 1;
+                    if (good.getType() == GoodsType.Legal) {
+                        LegalGoods legal = (LegalGoods) good;
+                        players.get(i).addCoins(legal.getQueenBonus());
+                        // System.out.println(legal.getQueenBonus());
+                        queen += 1;
+                    }
                 }
 
             }
